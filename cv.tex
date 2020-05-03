@@ -1,0 +1,408 @@
+%----------------------------------------------------------------------------------------
+%	DOCUMENT DEFINITION
+%----------------------------------------------------------------------------------------
+
+% we use article class because we want to fully customize the page
+\documentclass[10pt,A4]{article}	
+
+
+%----------------------------------------------------------------------------------------
+%	ENCODING
+%----------------------------------------------------------------------------------------
+
+%we use utf8 since we want to build from any machine
+\usepackage[utf8]{inputenc}	
+
+%----------------------------------------------------------------------------------------
+%	LOGIC
+%----------------------------------------------------------------------------------------
+% For color
+\usepackage{xcolor}
+
+\usepackage{xifthen}
+\usepackage{calc}
+\usepackage[hidelinks]{hyperref}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% some tex-live fonts - choose your own
+
+%\usepackage[defaultsans]{droidsans}
+%\usepackage[default]{comfortaa}
+%\usepackage{cmbright}
+\usepackage[default]{raleway}
+%\usepackage{fetamont}
+%\usepackage[default]{gillius}
+%\usepackage[light,math]{iwona}
+%\usepackage[thin]{roboto} 
+
+% set font default
+\renewcommand*\familydefault{\sfdefault} 	
+\usepackage[T1]{fontenc}
+
+% more font size definitions
+\usepackage{moresize}		
+
+% font icons package
+\usepackage{fontawesome}
+
+%----------------------------------------------------------------------------------------
+%	PAGE LAYOUT  DEFINITIONS
+%----------------------------------------------------------------------------------------
+
+%define page styles using geometry
+\usepackage[a4paper]{geometry}		
+
+% for example, change the margins to 2 inches all round
+\geometry{top=2cm, bottom=2cm, left=2cm, right=2cm} 	
+
+% use customized header
+\usepackage{fancyhdr}				
+\pagestyle{fancy}
+
+%less space between header and content
+\setlength{\headheight}{-5pt}		
+
+% customize header entries
+\lhead{}
+\rhead{}
+\chead{}
+
+%indentation is zero
+\setlength{\parindent}{0mm}
+
+%----------------------------------------------------------------------------------------
+%	GRAPHICS DEFINITIONS
+%---------------------------------------------------------------------------------------- 
+
+% for drawing graphics and charts
+\usepackage{tikz}
+\usetikzlibrary{shapes, backgrounds}
+
+% use to vertically center content
+% credits to: http://tex.stackexchange.com/questions/7219/how-to-vertically-center-two-images-next-to-each-other
+\newcommand{\vcenteredinclude}[1]{\begingroup
+	\setbox0=\hbox{\includegraphics{#1}}%
+	\parbox{\wd0}{\box0}\endgroup}
+
+% use to vertically center content
+% credits to: http://tex.stackexchange.com/questions/7219/how-to-vertically-center-two-images-next-to-each-other
+\newcommand*{\vcenteredhbox}[1]{\begingroup
+	\setbox0=\hbox{#1}\parbox{\wd0}{\box0}\endgroup}
+
+%----------------------------------------------------------------------------------------
+%	ICON-SET EMBEDDING
+%---------------------------------------------------------------------------------------- 
+
+% at this point we simplify our icon-embedding by simply referring to a set of png images.
+% if you find a good way of including svg without conflicting with other packages you can
+% replace this part
+\newcommand{\icon}[2]{\colorbox{black}{\makebox(#2, #2){\textcolor{white}{\large\csname fa#1\endcsname}}}}	%icon shortcut
+\newcommand{\icontext}[3]{ 						%icon with text shortcut
+	\vcenteredhbox{\icon{#1}{#2}}\hspace{0.2cm}\vcenteredhbox{\textcolor{black}{#3}}
+}
+
+%----------------------------------------------------------------------------------------
+% 	HEADER
+%----------------------------------------------------------------------------------------
+
+% remove top header line
+\renewcommand{\headrulewidth}{0pt} 
+
+%remove botttom header line
+\renewcommand{\footrulewidth}{0pt}	  	
+
+%remove pagenum
+\renewcommand{\thepage}{}	
+
+%remove section num		
+\renewcommand{\thesection}{}			
+
+
+%----------------------------------------------------------------------------------------
+%
+% 	TIKZ GRAPHICS
+%
+%----------------------------------------------------------------------------------------
+
+\newcounter{a}
+\newcounter{b}
+\newcounter{c}
+\newcounter{barcount}
+
+%----------------------------------------------------------------------------------------
+% 	BAR CHART
+%----------------------------------------------------------------------------------------
+
+% draw a bar chart
+% param 1: width
+% param 2: height
+% param 3: border color
+% param 4: label text color
+% param 5: label bg color
+% param 6: cat 1 color
+\newenvironment{barchart}[8]{
+	
+	\newcommand{\barwidth}{0.35}
+	\newcommand{\barsep}{0.2}
+	
+	% param 1: overall percent
+	% param 2: label
+	% param 3: cat 1 percent
+	% param 4: cat 2 percent
+	% param 5: cat 3 percent
+	\newcommand{\baritem}[5]{
+		
+		\pgfmathparse{##3+##4+##5}
+		\let\perc\pgfmathresult
+		
+		\pgfmathparse{#2}
+		\let\barsize\pgfmathresult
+		
+		\pgfmathparse{\barsize*##3/100}
+		\let\barone\pgfmathresult
+		
+		\pgfmathparse{\barsize*##4/100}
+		\let\bartwo\pgfmathresult
+		
+		\pgfmathparse{\barsize*##5/100}
+		\let\barthree\pgfmathresult
+		
+		\pgfmathparse{(\barwidth*\thebarcount)+(\barsep*\thebarcount)}
+		\let\barx\pgfmathresult
+		
+		\filldraw[fill=#6, draw=none] (0,-\barx) rectangle (\barone,-\barx-\barwidth);
+		\filldraw[fill=#7, draw=none] (\barone, -\barx) rectangle (\barone+\bartwo,-\barx-\barwidth);
+		\filldraw[fill=#8, draw=none] (\barone+\bartwo,-\barx ) rectangle (\barone+\bartwo+\barthree,-\barx-\barwidth);
+		
+		\node [label=180:\colorbox{#5}{\textcolor{#4}{##2}}] at (0,-\barx-0.175) {};
+		\addtocounter{barcount}{1}
+	}
+	\begin{tikzpicture}
+	\setcounter{barcount}{0}
+	
+}
+{\end{tikzpicture}}
+
+%----------------------------------------------------------------------------------------
+% 	BUBBLE CHART
+%----------------------------------------------------------------------------------------
+\newcommand{\bubble}[5]{
+	\definecolor{tmpcol}{RGB}{50,50,#5}
+	% slice
+	\filldraw[fill=black,draw=none] (#1,0.5) circle (#3);
+	
+	% outer label
+	\node[label=\textcolor{black}{#4}] at (#1,0.7) {};
+}
+
+\newcommand{\bubbles}[2]{
+	%reset counters
+	\setcounter{a}{0}
+	\setcounter{c}{150}
+	\begin{tikzpicture}[scale=3]
+	\foreach \p/\t in {#1} {
+		\addtocounter{a}{1}
+		\bubble{\thea/2}{\theb}{\p/25}{\t}{1\p0}
+	}
+	\end{tikzpicture}
+}
+
+
+%----------------------------------------------------------------------------------------
+%	custom sections
+%----------------------------------------------------------------------------------------
+
+% create a coloured box with arrow and title as cv section headline
+% param 1: section title
+%
+\newcommand{\cvsection}[1] {
+	\textcolor{white}{\MakeUppercase{\textbf{#1}}}
+}
+
+\newcommand{\cvsect}[1]{
+	\colorbox{black}{{\cvsection{#1}}}\\\\%
+}
+
+%----------------------------------------------------------------------------------------
+% CUSTOM LOREM IPSUM
+%----------------------------------------------------------------------------------------
+\newcommand{\lorem}{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.}
+
+%----------------------------------------------------------------------------------------
+% ENTRY LIST
+%----------------------------------------------------------------------------------------
+\usepackage{tabularx}
+
+\setlength{\tabcolsep}{0pt}
+\newenvironment{entrylist}{%
+	\begin{tabular*}{\textwidth}[t]{@{\extracolsep{\fill}}ll}
+	}{%
+	\end{tabular*}
+}
+
+\newcommand{\entry}[4]{%
+	\parbox[t]{3.5cm}{%
+		#1%
+	}%
+	&\parbox[t]{14cm}{%
+		\textbf{#2}%
+		\hfill%
+		{\footnotesize \textbf{\textcolor{black}{#3}}}\\%
+		#4%
+	}\\\\}
+
+\newcommand{\slashsep}{
+	\hspace{2mm}/\hspace{2mm}
+}
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT CONTENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+	
+\definecolor{azure}{rgb}{0.0, 0.5, 1.0}	%----------------------------------------------------------------------------------------
+	%	TITLE HEADLINE
+	%----------------------------------------------------------------------------------------
+	\begin{minipage}[t]{0.4\textwidth}\hrule height 0pt width 0pt%
+		\colorbox{black}{{\HUGE\textcolor{white}{\textbf{\MakeUppercase{Ricardo}}}}}%
+		\\
+		\colorbox{black}{{\HUGE\textcolor{white}{\textbf{\MakeUppercase{Ruiz}}}}}%
+		
+	\end{minipage}%
+	\begin{minipage}[t]{0.34\textwidth}\hrule height 0pt width 0pt%
+		\small%
+		\icontext{MapMarker}{12}{Mexico City, Mexico}\\
+		\icontext{Globe}{12}{\href{https://ricardoengitlab.gitlab.io/}{ricardoengitlab.gitlab.io}}\\
+		\icontext{At}{12}{\href{mailto:gaanzz11@gmail.com}{gaanzz11@gmail.com}}\\	
+	\end{minipage}%
+	\begin{minipage}[t]{0.3\textwidth}\hrule height 0pt width 0pt%
+		\small%
+		\icontext{Gitlab}{12}{\href{https://gitlab.com/Ricardoengitlab}{gitlab.com/Ricardoengitlab}}\\
+		\icontext{Twitter}{12}{\href{https://twitter.com/@Ricardoentuiter}{@Ricardoentuiter}}\\
+		\icontext{Calendar}{12}{Exp grad date: \textbf{Jun, 2021}}\\
+	\end{minipage}%
+	
+	% manage space by reducing font size
+	\small%
+	\vspace{0.5cm}
+	
+	%----------------------------------------------------------------------------------------
+	%	SKILLS AND TECHNOLOGIES
+	%----------------------------------------------------------------------------------------
+	
+	\cvsect{Projects}
+	\begin{entrylist}
+		\entry
+		{Summer 2019 \\ Mexico City}
+		{Full stack developer}
+		{Personal project}
+		{Web applications to complete freecodecamp.org curriculum and get "Responsive Web Design" and "Javascript Algorithms And Data Structures" certifications. \\
+			\texttt{HTML}\slashsep
+			\texttt{CSS}\slashsep
+			\texttt{Javascript}}
+		\entry
+		{Summer 2018\\ Mexico City}
+		{Full stack developer}
+		{Personal project}
+		{Mobile application for Android OS to help teachers and students to know if a number is prime or not, also the app can give you the list of prime numbers in a range and calculate the Euler's totient function.\\
+			\texttt{Flutter}\slashsep
+			\texttt{Dart}}
+		\entry
+		{Summer 2019\\ Mexico City}
+		{Back-end developer}
+		{School project}
+		{Desktop application to simulate the behavior of a dron in a city exploring the environment and capable of charging battery when needed.\\
+			\texttt{Unity}\slashsep
+			\texttt{C\#}}
+		\entry
+		{Autumn 2019\\ Mexico City}
+		{Back-end developer}
+		{School project}
+		{Game application to simulate the behavior of an artificial intelligence capable of play the Othello game and choose the best move depending on the level of difficulty chosen.\\
+			\texttt{Processing}\slashsep
+			\texttt{Java}}
+
+
+		\entry
+		{Present\\ Mexico City}
+		{Full stack developer}
+		{School project}
+		{Web application to help students register for events organized by the different faculties at UNAM and allow organizers to manage the event more easily.\\
+			\texttt{Python \& Django}\slashsep
+			\texttt{PostgreSQL}\slashsep
+			\texttt{HTML}\slashsep
+			\texttt{CSS}}
+
+
+	\end{entrylist}
+	\\
+	\cvsect{Education}
+	\begin{entrylist}
+		\entry
+		{2017– 2021 \\ Mexico City}
+		{BS in Computer Science}
+		{UNAM, Faculty of Science}
+		{Relevant Coursework: Automata Theory, Computer Architecture, Algorithm Analysis, Artificial Intelligence, Software Engineering, Operating Systems, Data Structures, Relational Databases, Distributed Computing, Geographic Information Systems \\ 
+		\texttt{\textbf{GPA: 81}}}
+	\end{entrylist}
+	\\
+		
+	
+
+	\begin{minipage}[t]{0.5\textwidth}\hrule height 0pt width 0pt%
+	\cvsect{Technical Skills}
+	\begin{minipage}[t]{0.3\textwidth}%
+		3 years\\ 2 years \\ 1 year \\ 6 months \\ \\ 2 months \\ Currently
+	\end{minipage}%
+	\begin{minipage}[t]{0.7\textwidth}%
+		\textbf{Python, Java}\\ \textbf{HTML, CSS, Haskell} \\ \textbf{Flutter, Dart} \\ \textbf{PostgreSQL, Oracle SQL Developer, Javascript} \\ \textbf{C\#, Unity} \\ \textbf{C, Django, Assembly language, React native}
+	\end{minipage}%
+	\end{minipage}%
+	\hspace{1cm}
+	\begin{minipage}[t]{0.45\textwidth}\hrule height 0pt width 0pt%
+		\cvsect{Workflow}
+		\textbf{Arch Linux, Android Studio, Git, iPadOS, Latex, Visual Studio Code, i3, Gnome}
+	\end{minipage}%
+	\hspace{2cm}
+	\\
+	
+
+
+
+	
+	\begin{minipage}[t]{0.3\textwidth}\hrule height 0pt width 0pt%
+		\cvsect{Languages}
+		\textbf{Spanish} - native\\
+		\textbf{English} - proficient\\
+		\textbf{French} - limited\\
+		\textbf{Portuguese} - limited\\
+	\end{minipage}%
+	\hspace{0cm}
+	\begin{minipage}[t]{0.3\textwidth}\hrule height 0pt width 0pt%
+		\cvsect{Hobbies}
+		I love to try new apps that help me to improve my productivity and create awesome things with them. 
+		I like playing video and board games with my friends, also I like making pc builds.
+	\end{minipage}%
+	\hspace{2cm}
+	\begin{minipage}[t]{0.3\textwidth}\hrule height 0pt width 0pt%
+		\cvsect{Interests}
+		\texttt{Augmented reality}\slashsep
+		\texttt{Machine Learning}\slashsep
+		\texttt{Data Science}\slashsep
+		\texttt{Computer Graphics}\slashsep
+		\texttt{Open Source}\slashsep
+		\texttt{UI}\slashsep
+		\texttt{Cryptography}\slashsep
+		\texttt{Concurrent systems}\slashsep
+		\texttt{UX}\slashsep
+		\texttt{Data Mining} \slashsep
+		\texttt{Computer hardware}
+
+		
+	\end{minipage}%
+	% LANGUAGES
+	
+\end{document}
