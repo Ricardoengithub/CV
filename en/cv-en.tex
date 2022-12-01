@@ -1,5 +1,5 @@
 %----------------------------------------------------------------------------------------
-%	DOCUMENT DEFINITION
+% DOCUMENT DEFINITION
 %----------------------------------------------------------------------------------------
 
 % we use article class because we want to fully customize the page
@@ -7,7 +7,7 @@
 
 
 %----------------------------------------------------------------------------------------
-%	ENCODING
+% ENCODING
 %----------------------------------------------------------------------------------------
 
 %we use utf8 since we want to build from any machine
@@ -17,7 +17,7 @@
 
 
 %----------------------------------------------------------------------------------------
-%	LOGIC
+% LOGIC
 %----------------------------------------------------------------------------------------
 % For color
 \usepackage{xcolor}
@@ -27,7 +27,7 @@
 \usepackage[hidelinks]{hyperref}
 
 %----------------------------------------------------------------------------------------
-%	FONT
+% FONT
 %----------------------------------------------------------------------------------------
 
 % some tex-live fonts - choose your own
@@ -52,14 +52,14 @@
 \usepackage{fontawesome}
 
 %----------------------------------------------------------------------------------------
-%	PAGE LAYOUT  DEFINITIONS
+% PAGE LAYOUT  DEFINITIONS
 %----------------------------------------------------------------------------------------
 
 %define page styles using geometry
 \usepackage[a4paper]{geometry}
 
 % for example, change the margins to 2 inches all round
-\geometry{top=1.5cm, bottom=1.5cm, left=2cm, right=2cm}
+\geometry{top=1.5cm, bottom=1cm, left=2cm, right=2cm}
 
 % use customized header
 \usepackage{fancyhdr}
@@ -77,7 +77,7 @@
 \setlength{\parindent}{0mm}
 
 %----------------------------------------------------------------------------------------
-%	GRAPHICS DEFINITIONS
+% GRAPHICS DEFINITIONS
 %---------------------------------------------------------------------------------------- 
 
 % for drawing graphics and charts
@@ -87,28 +87,28 @@
 % use to vertically center content
 % credits to: http://tex.stackexchange.com/questions/7219/how-to-vertically-center-two-images-next-to-each-other
 \newcommand{\vcenteredinclude}[1]{\begingroup
-	\setbox0=\hbox{\includegraphics{#1}}%
-	\parbox{\wd0}{\box0}\endgroup}
+  \setbox0=\hbox{\includegraphics{#1}}%
+  \parbox{\wd0}{\box0}\endgroup}
 
 % use to vertically center content
 % credits to: http://tex.stackexchange.com/questions/7219/how-to-vertically-center-two-images-next-to-each-other
 \newcommand*{\vcenteredhbox}[1]{\begingroup
-	\setbox0=\hbox{#1}\parbox{\wd0}{\box0}\endgroup}
+  \setbox0=\hbox{#1}\parbox{\wd0}{\box0}\endgroup}
 
 %----------------------------------------------------------------------------------------
-%	ICON-SET EMBEDDING
+% ICON-SET EMBEDDING
 %---------------------------------------------------------------------------------------- 
 
 % at this point we simplify our icon-embedding by simply referring to a set of png images.
 % if you find a good way of including svg without conflicting with other packages you can
 % replace this part
-\newcommand{\icon}[2]{\colorbox{black}{\makebox(#2, #2){\textcolor{white}{\large\csname fa#1\endcsname}}}}	%icon shortcut
-\newcommand{\icontext}[3]{ 						%icon with text shortcut
-	\vcenteredhbox{\icon{#1}{#2}}\hspace{0.2cm}\vcenteredhbox{\textcolor{black}{#3}}
+\newcommand{\icon}[2]{\colorbox{black}{\makebox(#2, #2){\textcolor{white}{\large\csname fa#1\endcsname}}}}  %icon shortcut
+\newcommand{\icontext}[3]{            %icon with text shortcut
+  \vcenteredhbox{\icon{#1}{#2}}\hspace{0.2cm}\vcenteredhbox{\textcolor{black}{#3}}
 }
 
 %----------------------------------------------------------------------------------------
-% 	HEADER
+%   HEADER
 %----------------------------------------------------------------------------------------
 
 % remove top header line
@@ -126,7 +126,7 @@
 
 %----------------------------------------------------------------------------------------
 %
-% 	TIKZ GRAPHICS
+%   TIKZ GRAPHICS
 %
 %----------------------------------------------------------------------------------------
 
@@ -136,7 +136,7 @@
 \newcounter{barcount}
 
 %----------------------------------------------------------------------------------------
-% 	BAR CHART
+%   BAR CHART
 %----------------------------------------------------------------------------------------
 
 % draw a bar chart
@@ -148,83 +148,83 @@
 % param 6: cat 1 color
 \newenvironment{barchart}[8]{
 
-	\newcommand{\barwidth}{0.35}
-	\newcommand{\barsep}{0.2}
+  \newcommand{\barwidth}{0.35}
+  \newcommand{\barsep}{0.2}
 
-	% param 1: overall percent
-	% param 2: label
-	% param 3: cat 1 percent
-	% param 4: cat 2 percent
-	% param 5: cat 3 percent
-	\newcommand{\baritem}[5]{
+  % param 1: overall percent
+  % param 2: label
+  % param 3: cat 1 percent
+  % param 4: cat 2 percent
+  % param 5: cat 3 percent
+  \newcommand{\baritem}[5]{
 
-		\pgfmathparse{##3+##4+##5}
-		\let\perc\pgfmathresult
+    \pgfmathparse{##3+##4+##5}
+    \let\perc\pgfmathresult
 
-		\pgfmathparse{#2}
-		\let\barsize\pgfmathresult
+    \pgfmathparse{#2}
+    \let\barsize\pgfmathresult
 
-		\pgfmathparse{\barsize*##3/100}
-		\let\barone\pgfmathresult
+    \pgfmathparse{\barsize*##3/100}
+    \let\barone\pgfmathresult
 
-		\pgfmathparse{\barsize*##4/100}
-		\let\bartwo\pgfmathresult
+    \pgfmathparse{\barsize*##4/100}
+    \let\bartwo\pgfmathresult
 
-		\pgfmathparse{\barsize*##5/100}
-		\let\barthree\pgfmathresult
+    \pgfmathparse{\barsize*##5/100}
+    \let\barthree\pgfmathresult
 
-		\pgfmathparse{(\barwidth*\thebarcount)+(\barsep*\thebarcount)}
-		\let\barx\pgfmathresult
+    \pgfmathparse{(\barwidth*\thebarcount)+(\barsep*\thebarcount)}
+    \let\barx\pgfmathresult
 
-		\filldraw[fill=#6, draw=none] (0,-\barx) rectangle (\barone,-\barx-\barwidth);
-		\filldraw[fill=#7, draw=none] (\barone, -\barx) rectangle (\barone+\bartwo,-\barx-\barwidth);
-		\filldraw[fill=#8, draw=none] (\barone+\bartwo,-\barx ) rectangle (\barone+\bartwo+\barthree,-\barx-\barwidth);
+    \filldraw[fill=#6, draw=none] (0,-\barx) rectangle (\barone,-\barx-\barwidth);
+    \filldraw[fill=#7, draw=none] (\barone, -\barx) rectangle (\barone+\bartwo,-\barx-\barwidth);
+    \filldraw[fill=#8, draw=none] (\barone+\bartwo,-\barx ) rectangle (\barone+\bartwo+\barthree,-\barx-\barwidth);
 
-		\node [label=180:\colorbox{#5}{\textcolor{#4}{##2}}] at (0,-\barx-0.175) {};
-		\addtocounter{barcount}{1}
-	}
-	\begin{tikzpicture}
-	\setcounter{barcount}{0}
+    \node [label=180:\colorbox{#5}{\textcolor{#4}{##2}}] at (0,-\barx-0.175) {};
+    \addtocounter{barcount}{1}
+  }
+  \begin{tikzpicture}
+  \setcounter{barcount}{0}
 }
 {\end{tikzpicture}}
 
 %----------------------------------------------------------------------------------------
-% 	BUBBLE CHART
+%   BUBBLE CHART
 %----------------------------------------------------------------------------------------
 \newcommand{\bubble}[5]{
-	\definecolor{tmpcol}{RGB}{50,50,#5}
-	% slice
-	\filldraw[fill=black,draw=none] (#1,0.5) circle (#3);
-	% outer label
-	\node[label=\textcolor{black}{#4}] at (#1,0.7) {};
+  \definecolor{tmpcol}{RGB}{50,50,#5}
+  % slice
+  \filldraw[fill=black,draw=none] (#1,0.5) circle (#3);
+  % outer label
+  \node[label=\textcolor{black}{#4}] at (#1,0.7) {};
 }
 
 \newcommand{\bubbles}[2]{
-	%reset counters
-	\setcounter{a}{0}
-	\setcounter{c}{150}
-	\begin{tikzpicture}[scale=3]
-	\foreach \p/\t in {#1} {
-		\addtocounter{a}{1}
-		\bubble{\thea/2}{\theb}{\p/25}{\t}{1\p0}
-	}
-	\end{tikzpicture}
+  %reset counters
+  \setcounter{a}{0}
+  \setcounter{c}{150}
+  \begin{tikzpicture}[scale=3]
+  \foreach \p/\t in {#1} {
+    \addtocounter{a}{1}
+    \bubble{\thea/2}{\theb}{\p/25}{\t}{1\p0}
+  }
+  \end{tikzpicture}
 }
 
 
 %----------------------------------------------------------------------------------------
-%	custom sections
+% custom sections
 %----------------------------------------------------------------------------------------
 
 % create a coloured box with arrow and title as cv section headline
 % param 1: section title
 %
 \newcommand{\cvsection}[1] {
-	\textcolor{white}{\MakeUppercase{\textbf{#1}}}
+  \textcolor{white}{\MakeUppercase{\textbf{#1}}}
 }
 
 \newcommand{\cvsect}[1]{
-	\colorbox{black}{{\cvsection{#1}}}\\\\%
+  \colorbox{black}{{\cvsection{#1}}}\\ \\%
 }
 
 %----------------------------------------------------------------------------------------
@@ -239,138 +239,133 @@
 
 \setlength{\tabcolsep}{0pt}
 \newenvironment{entrylist}{%
-	\begin{tabular*}{\textwidth}[t]{@{\extracolsep{\fill}}ll}
-	}{%
-	\end{tabular*}
+  \begin{tabular*}{\textwidth}[t]{@{\extracolsep{\fill}}ll}
+  }{%
+  \end{tabular*}
 }
 
 \newcommand{\entry}[5]{%
-	&\parbox[t]{17.5cm}{%
-		\large\textbf{#1}%
-		\hfill
-		{\small \textbf{\textcolor{black}{#2}}}\\%
-		\normalsize #4\\
-		\texttt{#5}
-%		\hfill%%
-%		{\footnotesize \textbf{\textcolor{black}{#3}}}\\%
-%		#4%
-%		{\textbf{#4}}
-	}\\\\}
+  &\parbox[t]{17.5cm}{%
+    \large\textbf{#1}%
+    \hfill
+    {\small \textbf{\textcolor{black}{#2}}}\\%
+    \normalsize #4\\
+    \texttt{#5}
+%   \hfill%%
+%   {\footnotesize \textbf{\textcolor{black}{#3}}}\\%
+%   #4%
+%   {\textbf{#4}}
+  }\\\\}
 
 \newcommand{\slashsep}{
-	\hspace{2mm}/\hspace{2mm}
+  \hspace{1mm}/\hspace{1mm}
 }
 
 %----------------------------------------------------------------------------------------
-%	DOCUMENT CONTENT
+% DOCUMENT CONTENT
 %----------------------------------------------------------------------------------------
 \begin{document}
 
-\definecolor{azure}{rgb}{0.0, 0.5, 1.0}	%----------------------------------------------------------------------------------------
-	%	TITLE HEADLINE
-	%----------------------------------------------------------------------------------------
-	\begin{minipage}[t]{0.37\textwidth}\hrule height 0pt width 0pt%
-		\colorbox{black}{{\HUGE\textcolor{white}{\textbf{\MakeUppercase{Ricardo}}}}}%
-		\\
-		\colorbox{black}{{\HUGE\textcolor{white}{\textbf{\MakeUppercase{Ruiz}}}}}%
+\definecolor{azure}{rgb}{0.0, 0.5, 1.0} %----------------------------------------------------------------------------------------
+  % TITLE HEADLINE
+  %----------------------------------------------------------------------------------------
+  \begin{minipage}[t]{0.37\textwidth}\hrule height 0pt width 0pt%
+    \colorbox{black}{{\HUGE\textcolor{white}{\textbf{\MakeUppercase{Ricardo}}}}}%
+    \\
+    \colorbox{black}{{\HUGE\textcolor{white}{\textbf{\MakeUppercase{Ruiz}}}}}%
 
-	\end{minipage}%
-	\begin{minipage}[t]{0.35\textwidth}\hrule height 0pt width 0pt%
-		\small%
-		\icontext{MapMarker}{12}{Mexico City, Mexico}\\
+  \end{minipage}%
+  \begin{minipage}[t]{0.35\textwidth}\hrule height 0pt width 0pt%
+    \small%
+    \icontext{MapMarker}{12}{Mexico City, Mexico}\\
 
-		\icontext{Linkedin}{12}{\href{https://linkedin.com/in/ricardo-ruiz-194b531aa}{\underline{Ricardo Ruiz}}}\\
+    \icontext{Linkedin}{12}{\href{https://linkedin.com/in/ricardo-ruiz-194b531aa}{\underline{Ricardo Ruiz}}}\\
 
-		\icontext{At}{12}{\href{mailto:gaanzz11@gmail.com}{gaanzz11@gmail.com}}\\
-	\end{minipage}%
-	\begin{minipage}[t]{0.4\textwidth}\hrule height 0pt width 0pt%
-		\small%
-		\icontext{Gitlab}{12}{\href{https://gitlab.com/Ricardoengitlab}{gitlab.com/Ricardoengitlab}}\\
+    \icontext{At}{12}{\href{mailto:gaanzz11@gmail.com}{gaanzz11@gmail.com}}\\
+  \end{minipage}%
+  \begin{minipage}[t]{0.4\textwidth}\hrule height 0pt width 0pt%
+    \small%
+    \icontext{Gitlab}{12}{\href{https://gitlab.com/Ricardoengitlab}{gitlab.com/Ricardoengitlab}}\\
 
-		\icontext{Github}{12}{\href{https://github.com/Ricardoengithub}{github.com/Ricardoengithub}}\\
+    \icontext{Github}{12}{\href{https://github.com/Ricardoengithub}{github.com/Ricardoengithub}}\\
 
-		\icontext{Phone}{12}{\href{}{(+52) 5620278551}}\\
+    \icontext{Phone}{12}{\href{}{(+52) 5620278551}}\\
 
-		%\icontext{Calendar}{12}{Exp grad date: \textbf{Jun, 2022}}\\
-	\end{minipage}%
+    %\icontext{Calendar}{12}{Exp grad date: \textbf{Jun, 2022}}\\
+  \end{minipage}%
 
-	% manage space by reducing font size
-	\vspace{0.2cm}
-	%----------------------------------------------------------------------------------------
-	%	SKILLS AND TECHNOLOGIES
-	%----------------------------------------------------------------------------------------
+  % manage space by reducing font size
+  \vspace{0.0cm}
+  %----------------------------------------------------------------------------------------
+  % SKILLS AND TECHNOLOGIES
+  %----------------------------------------------------------------------------------------
 
-	\cvsect{Summary}
-	Experienced developer with 6 years of programming experience in sectors such as insurance, real estate and e-commerce. I mainly work with Javascript (with experience in React), Python (with experience in Django) and Java. As a Computer Scientist I can get involved in any area of development including research however I am mainly interested in the front end. \\
-	\\
-	\cvsect{Professional Experience}
-	\begin{entrylist}
-		\entry
-		{Front end developer at GNP Seguros}
-		{April 2021 - February 2022}
-		{GNP Seguros}
-		{UI for an insurance company where agents can fill all data required for several types of insurances based on their client's needs to get the cost and try to make an offer.}
-		{ Javascript \slashsep React \slashsep Redux \slashsep Material UI \slashsep Team Management}
-		\entry
-		{Full stack developer at M22}
-		{October 2020 - February 2021}
-		{M22}
-		{UI for a real estate company where people can view details and availability of several places for make purchase agreement. All the data updates in real time and the content is modified from a Content Management System(CMS).}
-		{Javascript \slashsep React \slashsep Strapi JS \slashsep QGIS \slashsep GraphQL \slashsep PostgreSQL}
-		\entry
-		{Full stack developer at Ultra maratón sierra mixe}
-		{January 2020 - September 2020}
-		{Ultra maratón sierra mixe}
-		{This is a client's project on the automation of the processes involved in the realization of a marathon race such as registration, marketing and payment.}
-		{Javascript \slashsep React \slashsep Google Firebase \slashsep Bootstrap}
-		\entry
-		{Full stack developer}
-		{Summer 2018}
-		{Copnap}
-		{Mobile application for Android to help teachers and students to know if a number is prime or not, also the app can give you the list of prime numbers in a range and calculate the Euler's totient function.}
-		{Android Studio \slashsep Flutter \slashsep Dart}
-	\end{entrylist}
-	\\
-	\cvsect{Education}
-	\begin{entrylist}
-		\entry
-		{BS in Computer Science (\small 2017 - 2021)}
-		{National Autonomous University of Mexico }
-		{UNAM, Faculty of Science}
-		{Relevant Coursework: Automata Theory, Computer Architecture, Algorithm Analysis, Artificial Intelligence, Software Engineering, Operating Systems, Data Structures, Relational Databases, Distributed Computing, Geographic Information Systems} 
-		{GPA: 85}
-	\end{entrylist}
-	\\
-	\begin{minipage}[t]{.8\textwidth}\hrule height 0pt width 0pt%
-	\cvsect{Technical Skills}
-	\begin{minipage}[t]{0.22\textwidth}
-		\textbf{Advanced: }\\ \\
-		\textbf{Intermediate: }\\ \\
-		\textbf{Basic: } \\ \\ \\
-		\textbf{Others: }
-	\end{minipage}
-	\begin{minipage}[t]{.8\textwidth}%
-		\texttt{Javascript, React, HTML, CSS} \\ \\
-		\texttt{Python, Django, Java, Bootstrap} \\ \\
-		\texttt{NextJS, Gatsby, GraphQL, StrapiJS, Golang, NodeJS, Typescript, Angular, Tailwind CSS, React Native} \\ \\
-		\texttt{Flutter, Dart, Oracle SQL, C\#, C, Unity, Racket, Haskell}
-	\end{minipage}%
-	\end{minipage}
-	\hspace{.2cm}
-		\begin{minipage}[t]{0.3\textwidth}\hrule height 0pt width 0pt%
-		\cvsect{Soft skills}
-		\textit{Communication}\\
-		\textit{Teamwork}\\
-		\textit{Adaptability}\\
-		\textit{Problem-solving}\\
-		\textit{Interpersonal skills}\\
-		\textit{Time management}\\
-		\textit{Leadership}\\
-		\textit{Attention to detail}\\
-		\textit{Organization}
-	\end{minipage}%
-
-
-
-
+\cvsect{Summary} 
+  I have 2 years of professional experience in sectors such as insurance, real estate and e-commerce. I mainly work with Javascript (with experience in React and React Native), Python (with experience in Django) and Java. As a Computer Scientist I can get involved in any area of development including research however I am mainly interested in the front end. \\
+  \\
+  \cvsect{Professional Experience}
+  \begin{entrylist}
+    \entry
+    {Full Stack developer at Badak Soluciones}
+    {June 2022 - Present}
+    {AB InBev}
+    {I gave maintenance to two applications (web/mobile) that are used in Zacatecas, Mexico that allow the client (AB InBev) to obtain information on the sale of alcohol in different establishments in the state. I had to create an improved version of the app to be used during the Qatar 2022 world cup which was published in the Play Store which includes new features such as being able to be used offline and sync the data when conected.}
+    { React Native \slashsep React \slashsep Javascript \slashsep Firebase \slashsep MongoDB \slashsep Material UI}
+    \entry
+    {Front end developer at GNP Seguros}
+    {April 2021 - February 2022}
+    {GNP Seguros}
+    {UI for an insurance company where agents can fill all data required for several types of insurances based on their client's needs to get the cost and try to make an offer.}
+    { React \slashsep Javascript \slashsep Redux \slashsep Material UI \slashsep Team Management}
+    \entry
+    {Full stack developer at M22}
+    {October 2020 - February 2021}
+    {M22}
+    {UI for a real estate company where people can view details and availability of several places for make purchase agreement. All the data updates in real time and the content is modified from a Content Management System(CMS).}
+    {React \slashsep Javascript \slashsep Strapi JS \slashsep QGIS \slashsep GraphQL \slashsep PostgreSQL}
+    \entry
+    {Full stack developer at Ultra maratón sierra mixe}
+    {January 2020 - September 2020}
+    {Ultra maratón sierra mixe}
+    {This is a client's project on the automation of the processes involved in the realization of a marathon race such as registration, marketing and payment.}
+    { React \slashsep Javascript \slashsep Google Firebase \slashsep Bootstrap}
+  \end{entrylist}
+  \begin{minipage}[t]{.8\textwidth}\hrule height 0pt width 0pt%
+  \cvsect{Technical Skills}
+  \begin{minipage}[t]{0.22\textwidth}
+    \textbf{Advanced: }\\ \\
+    \textbf{Intermediate: }\\ \\
+    \textbf{Basic: } \\ \\ \\
+    \textbf{Others: }
+  \end{minipage}
+  \begin{minipage}[t]{.8\textwidth}%
+    \texttt{Javascript, React, HTML, CSS} \\ \\
+    \texttt{React Native, Python, Django, Java, Bootstrap} \\ \\
+    \texttt{NextJS, Gatsby, GraphQL, StrapiJS, Golang, NodeJS, Typescript, Angular, React Native, MongoDB} \\ \\
+    \texttt{Flutter, Dart, Oracle SQL, C\#, C, Unity, Racket, Haskell}
+  \end{minipage}%
+  \end{minipage}
+  \hspace{.2cm}
+    \begin{minipage}[t]{0.3\textwidth}\hrule height 0pt width 0pt%
+    \cvsect{Soft skills}
+    \textit{Communication}\\
+    \textit{Teamwork}\\
+    \textit{Adaptability}\\
+    \textit{Problem-solving}\\
+    \textit{Interpersonal skills}\\
+    \textit{Time management}\\
+    \textit{Leadership}\\
+    \textit{Attention to detail}\\
+    \textit{Organization}
+  \end{minipage} \vspace{0.2cm}
+  
+    \cvsect{Education}
+  \begin{entrylist}
+    \entry
+    {BS in Computer Science}
+    {National Autonomous University of Mexico }
+    {UNAM, Faculty of Science}
+    {Relevant Coursework: Automata Theory, Computer Architecture, Algorithm Analysis, Artificial Intelligence, Software Engineering, Operating Systems, Data Structures, Relational Databases} 
+    {}
+  \end{entrylist}
 \end{document}
